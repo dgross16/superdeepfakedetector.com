@@ -76,8 +76,9 @@ button {
 }
 .container img{
     position: relative;
-    max-width: 30%;
+    max-height: 5%;
 }
+
 
 
 #opencv-container {

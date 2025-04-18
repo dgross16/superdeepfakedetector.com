@@ -1,5 +1,4 @@
 rnd/*
-conversion/*
-datasets/*
-dataset_json/*
-static/images/*
+conversion/
+datasets/
+dataset_json/
