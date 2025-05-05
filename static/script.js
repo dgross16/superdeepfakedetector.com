@@ -27,57 +27,46 @@ const loadOpenCv = function() {
         console.log('Failed to load ' + OPENCV_URL);
     });
     script.src = OPENCV_URL;
-    let node = document.getElementsByTagName('script')[0];
+    let node = document.getElementsByTagName('script')[1];
     node.parentNode.insertBefore(script, node);
 };
 
 
 
+
 window.onload = document.getElementById("input").addEventListener("change", function() {
+    const results = document.getElementById('results');
     const media = URL.createObjectURL(this.files[0]);
+    results.style.display = "none";
+    setVideo(media);
+    framerun();
+});
+
+
+const setVideo = (videoURL) => {
+    const results = document.getElementById('results');
     const videoContainer = document.getElementById('videoContainer');
     const video = document.getElementById("video"); // gets the video file
     const droparea = document.getElementById('droparea');
-    video.src = media; // sets the src of the video tag to the input video
-    droparea.style.display = "none";
-    video.style.display = "block"; // toggles the display of the video
+    droparea.firstElementChild.style.display = "none"
+    droparea.style.borderStyle = "none";
+    video.src = videoURL; // sets the src of the video tag to the input video
+    console.log(video.src)
+    //droparea.style.borderStyle = "none";
+    video.style.display = "block";
     videoContainer.style.display = "flex";
-
-    //console.log(cv.getBuildInformation);
-    //video.play();
-});
-
-const chooseAnother = function () {
-    const videoContainer = document.getElementById("videoContainer"); // gets the video file
-    const video = document.getElementById("video"); // gets the video file
-    videoContainer.style.display = "none";
-    video.style.display = "none"
-    video.removeAttribute('src');
-    video.src = '';
-
-    const droparea = document.getElementById('droparea');
-    droparea.style.display = "flex";
-    const input = document.getElementById('input');
-    input.value = '';
-
-
-    const results = document.getElementById('results');
     results.style.display = "none";
-}
+
+};
 
 const tryExample = function () {
     const examples = ['example1.mp4', 'example2.mp4', 'example3.mp4']
     const example = examples.splice(Math.floor(Math.random() * 3), 1);
-    const videoContainer = document.getElementById('videoContainer');
-    const video = document.getElementById("video"); // gets the video file
-    const droparea = document.getElementById('droparea');
-    video.src = `examples/${example}`; // sets the src of the video tag to the input video
-    droparea.style.display = "none";
-    video.style.display = "block"; // toggles the display of the video
-    videoContainer.style.display = "flex";
+    console.log(example);
+    const videoURL = `examples/${example}`; // sets the src of the video tag to the input video
+    console.log(videoURL);
+    setVideo(videoURL);
     framerun();
-
-
 }
 
 const dnd = function () {
@@ -107,9 +96,7 @@ const handleDrop = function (e) {
     const dt = e.dataTransfer;
     const files = dt.files;
     const media = URL.createObjectURL(files[0]);
-    const video = document.getElementById("video"); // gets the video file
-    video.src = media;
-    video.style.display = "block";
+    setVideo(media);
 };
 
 document.addEventListener("DOMContentLoaded", dnd);
@@ -119,7 +106,6 @@ const framerun = async function () {
     // Tensorflow.js model load
     const incep_resnetURL = 'models/incep_resnet/graph/model.json'
     const model = await tf.loadGraphModel(incep_resnetURL);
-
     // Get Video Dimensions
     const video = document.getElementById('video');
     const vidHeight = video.videoHeight;
@@ -130,12 +116,13 @@ const framerun = async function () {
 
     let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
     let cap = new cv.VideoCapture(video);
-    const FPS = 60;
+    const FPS = 30;
 
     let duration = video.duration;
 
     let length = Math.floor(duration * FPS);
 
+    video.muted = true;
     video.play();
 
     const faceModel = faceDetection.SupportedModels.MediaPipeFaceDetector;
@@ -149,6 +136,9 @@ const framerun = async function () {
     const results = document.getElementById('results');
 
     async function processVideo() {
+        console.log(!video.paused);
+        if (!video.paused){
+
         try {
             // start processing.
             const begin = Date.now();
@@ -169,7 +159,8 @@ const framerun = async function () {
                 // Face box and crop
                 const width = faces[0]['box']['width']
                 const height = faces[0]['box']['height']
-                const padding = Math.min(width, height)/2
+                const padding = Math.min(width, height)/3
+                //const padding = 0;
 
                 console.log(padding)
                 const x1 = faces[0]['box']['xMin'] - padding
@@ -222,16 +213,19 @@ const framerun = async function () {
                 const prob = preds.arraySync()[0][0];
                 console.log((Math.round(prob * 10000) / 100).toFixed(2))
                 all_preds.push(Number((Math.round(prob * 10000) / 100).toFixed(2)));
-                if (all_preds.length > 10) {
+                if (all_preds.length > 5) {
+                    results.style.display = "block";
                     const real_avg = (all_preds.reduce((prev, curr) => prev + curr) / all_preds.length).toPrecision(2);
-                    console.log(real_avg);
+                    console.log(`real_avg: ${real_avg}`);
 
-                    if (real_avg > 80) {
+                    if (real_avg > 50) {
                         results.style.backgroundColor = "#5B841E"
+                        results.style.borderColor = "#5B841E"
                         results.innerText = `${real_avg}% REAL`;
                     }
                     else {
                         results.style.backgroundColor = "#D90F0F"
+                        results.style.borderColor = "#D90F0F"
                         results.innerText = `${100 - real_avg}% FAKE`;
                     }
 
@@ -251,6 +245,7 @@ const framerun = async function () {
 
         } catch (err) {
             console.log(err);
+        };
         };
 
     };

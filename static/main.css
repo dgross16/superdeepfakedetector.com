@@ -1,35 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
 :root {
     --beacon: #005A8B;
+    --mpsych: #29ABE2;
+    --background: var(--beacon);
+    --main: white;
 }
 
 body {
     margin: 0;
-    background: var(--beacon);
-    color: white;
+    background: var(--background);
+    color: var(--main);
     font-size: 20pt;
-    font-family: "Helvetica Neue", "Arial", sans-serif;
+    font-family: "Outfit", "Helvetica Neue", "Arial", sans-serif;
+    font-weight: 400;
     text-align: center;
 }
 
 
-h1 {
-    font-family: "Helvetica Neue", "Arial", sans-serif;
-    font-size: 60px
+#title {
+    font-family: "Outfit", "Helvetica Neue", "Arial", sans-serif;
+    font-size: 72pt;
+    font-weight: 700;
+    margin: 0px;
 }
+
+#subtitle {
+    font-size: 24pt;
+}
+
 
 button {
     margin: 20px;
     height: 20%;
     padding: 10px;
     font-size: 16pt;
+    font-family: "Outfit";
     text-align: center;
     text-decoration: none;
     border: solid;
-    background-color: white;
-    border-color: white;
+    background-color: var(--main);
+    border-color: var(--main);
     border-radius: 15px;
-    font-weight: bold;
-    color: var(--beacon);
+    color: var(--background);
+}
+
+button:hover {
+    background-color: var(--background);
+    color: var(--main);
 }
 
 .droparea {
@@ -38,12 +57,12 @@ button {
     margin-right: auto;
     width: 500px;
     height: 300px;
-    border-color: white;
+    border-color: var(--main);
     border-width: 5px;
     border-style: dotted;
     background: none;
     border-radius: 30px;
-    color: white;
+    color: var(--main);
     justify-content: center;
     align-items: center;
 }
@@ -53,18 +72,29 @@ button {
 }
 
 #results {
+    padding: 20px;
     position: relative;
     font-weight: bold;
-    max-width:30%;
+    max-width:70%;
+    color: var(--main);
+    border: solid;
+    border-width: 5px;
+    border-radius: 15px;
+    border-color: var(--background);
 }
 
 .content {
     max-width:70%;
     margin-left: auto;
     margin-right: auto;
+    padding:0px;
     justify-content: center;
     align-items: center;
 }
+
+.content p {
+}
+
 
 
 .container {
@@ -73,23 +103,61 @@ button {
     max-width: 100%;
     justify-content: center;
     align: center;
-}
-.container img{
-    position: relative;
-    max-height: 5%;
+    align-items: center;
+    border-style: none;
+    border-width: 2px;
+    border-color: green;
 }
 
+img{
+    padding: 0px;
+    margin: 0px;
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+}
 
+.container.mpsych {
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: "Oswald";
+    font-size: 30px;
+    text-align: left;
+    line-height: 1.1;
+    margin: 0px;
+    margin-left: -10px;
+    margin-right: 30px;
+    margin-bottom: 50px;
+    color: black;
+    font-weight: 450;
+}
+#machine:hover{
+    color: #29ABE2;
+}
 
 #opencv-container {
     display: none;
 }
 
-img {
-    margin: 50px;
-    max-height: 100px;
-    width: auto;
+a {
+    padding:0px;
+    margin:0px;
+    text-decoration: none;
 }
+
+#gh {
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 15px;
+    border-color: var(--main);
+    color: var(--main);
+}
+
+#gh:hover {
+    background-color: var(--mpsych);
+
+}
+
 
 .container canvas{
     position: absolute;
@@ -121,21 +189,32 @@ video {
     display: none;
 }
 
+.container.bar {
+    background-color: var(--main);
+    color: var(--background);
+    text-align: center;
+    justify-content: center;
+}
+
+.line {
+    width: 0;
+    height: 150px;
+    border: 1px solid var(--background);
+    margin: 10px;
+
+}
+
 #upload {
     align: center;
 }
 
-#results{
+#results {
     font-size: 48px;
+    margin-bottom: 10px;
 }
 
-.htmx-indicator{
-    width: 200px;
-    display:none;
-    transition: opacity 500ms ease-in;
-}
-.htmx-request.htmx-indicator{
-    display:inline;
+#sponsors {
+    margin: 50px;
 }
 
 @media (orientation: portrait) {
@@ -145,6 +224,10 @@ video {
 
     .content {
         max-width: 90%;
+    }
+
+    #sponsors {
+        flex-direction: column;
     }
 
 }

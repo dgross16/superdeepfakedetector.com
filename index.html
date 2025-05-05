@@ -14,45 +14,57 @@
         <script async src="./static/script.js" onload="loadOpenCv();"type="text/javascript"></script>
     </head>
     <body>
+        <div class="container bar">
+            <div class="container" style="max-width:90%; display: block; margin-top: 20px;">
+                <h1 id="title">Super Deepfake Detector</h1>
+                <p id="subtitle">Bringing Deepfake Detection <b>to the browser.</b></p>
+            </div>
+        </div>
+        <div class="container bar">
+        </div>
+
         <div class="content">
-            <h1 id="title">Super Deepfake Detector</h1>
-            <div class="container">
+            <div class="container" style="margin-top: 12pt;">
             <div id="results">
             </div>
             </div>
-            <div class="videoContainer" id="videoContainer">
-                <video id="video"></video>
-            </div>
             <div class="container">
                 <div class="droparea" onclick="document.getElementById('input').click();"  id="droparea">
-                    <h3>Drag and Drop Video</h3>
+                    <h3>Drop Video or Click to Upload</h3>
+                    <div class="videoContainer" id="videoContainer">
+                        <video id="video"></video>
+                    </div>
                 </div>
             </div>
             <div class="container" id="opencv-container">
                 <canvas id="canvasOutput" ></canvas>
             </div>
-            <!-- <canvas id="faceCanvas" width="256" height="256"></canvas>
-            <div class="container" id="container2">
-                <canvas id="overlay" ></canvas>
-            </div>
-            -->
-            <span>
-                <button type="submit" id="button" onclick="framerun();">Detect</button>
-                <button id="chooseAnother" onclick="chooseAnother();">Choose Another Video</button>
-                <button id="example" onclick="tryExample();">Try an Example!</button>
-            </span>
 
-            <div class="container">
-            <a href="https://github.com/dgross16/superdeepfakedetector.com">
-                <img id="gh" src="static/images/github_logo.png">
-            </a>
-            </div>
-
-
+            <button id="example" onclick="tryExample();">Try an Example!</button>
             <input style="display: none" type="file" id="input" name="file" accept="video/mp4">
-
-
-
+            <p style="text-align: justify; line-height: 1.5;">How many times have you seen a video of some celebrity saying some outlandish thing, thinking
+            to yourself "this is has to be fake, right?" <b>SuperDeepfakeDetector.com</b> aims to solve that, by allowing users to drag and drop videos to
+            detect deepfake videos, all <b>in the browser.</b> This allows for the use of deepfake detection, without the need for expensive hardware or
+            expertise in the field. We are training and porting over models to run on the clientside, focusing on lightweight models which will run efficiently on the web.</p>
+            <div class="container">
+            <a id="gh" href="https://github.com/dgross16/superdeepfakedetector.com" style="display: flex; flex-direction: column; padding: 10px; margin-bottom: 20px;">
+                <img src="static/images/github-mark-white.png"><span>Source Code</span></a>
+            </div>
+        </div>
+        <div class="container bar" style="flex-direction: column;">
+            <div id="sponsors" class="container">
+                <div class="container">
+                    <a href="https://mpsych.org">
+                        <img id="mpsych" src="static/images/logo.svg" style="height: 120px; margin-right: 20px;"></a>
+                    <div class="container mpsych">
+                        <span style="font-size: 14px; margin-top: 0px; color: #505050; line-height: 1.2;">UNIVERSITY OF MASSACHUSETTS BOSTON<br></span>
+                        <a href="https://mpsych.org">
+                            <span id="machine">MACHINE<br>PSYCHOLOGY<br></span></a>
+                    </div>
+                </div>
+                <a href="https://umb.edu">
+                    <img id="umb" src="static/images/umb_logo_blue.png" style="height: 120px; margin-left: 20px;"></a>
+            </div>
         </div>
     </body>
 </html>
