@@ -92,8 +92,6 @@ button:hover {
     align-items: center;
 }
 
-.content p {
-}
 
 
 
@@ -219,11 +217,15 @@ video {
 
 @media (orientation: portrait) {
     h1 {
-        font-size: 48px;
+        font-size: 36px;
     }
 
     .content {
         max-width: 90%;
+    }
+
+    .content p {
+        font-size: 14px;
     }
 
     #sponsors {

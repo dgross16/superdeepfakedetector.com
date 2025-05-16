@@ -104,7 +104,8 @@ document.addEventListener("DOMContentLoaded", dnd);
 
 const framerun = async function () {
     // Tensorflow.js model load
-    const incep_resnetURL = 'models/incep_resnet/graph/model.json'
+    const incep_resnetURL = 'models/incep_resnet/graph/model.json';
+    //const xceptionURL = 'conversion/cnn_test/xception-2/graph/model.json';
     const model = await tf.loadGraphModel(incep_resnetURL);
     // Get Video Dimensions
     const video = document.getElementById('video');
