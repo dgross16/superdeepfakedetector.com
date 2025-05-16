@@ -21,7 +21,7 @@ body {
 
 #title {
     font-family: "Outfit", "Helvetica Neue", "Arial", sans-serif;
-    font-size: 72pt;
+    font-size: 60pt;
     font-weight: 700;
     margin: 0px;
 }
@@ -225,7 +225,7 @@ video {
     }
 
     .content p {
-        font-size: 14px;
+        font-size: 18px;
     }
 
     #sponsors {
